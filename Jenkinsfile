@@ -19,8 +19,7 @@ tools
 maven 'maven'
 }
 stages {
-	stage('setup')
-{
+	
 
 
   stage('Build Docker Image'){
