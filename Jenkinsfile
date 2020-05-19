@@ -67,26 +67,28 @@ BRANCH_NAME=sh(script:"echo $GIT_BRANCH|sed -e 's|origin/||g'",returnStdout:true
 }
 
   stage('Build Docker Image'){
-	  steps
-  {
+	  steps {
         sh 'docker build -t mmreddy424/spring-boot-mongo .'
   }
     }
 
     stage('Push Docker Image'){
+	    steps {
         withCredentials([string(credentialsId: 'DOKCER_HUB_PASSWORD', variable: 'Docker_Password')]) {
           sh "docker login -u mmreddy424 -p ${Docker_Password}"
         }
         sh 'docker push mmreddy424/spring-boot-mongo'
+	    }
      }
 
      stage("Deploy To Kuberates Cluster"){
+	     steps {
        kubernetesDeploy(
          configs: 'springBootMongo.yml',
          kubeconfigId: 'KUBERNATES_CONFIG',
          enableConfigSubstitution: true
         )
-     
+	     }
 	 }
 	 
 
