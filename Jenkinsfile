@@ -67,7 +67,10 @@ BRANCH_NAME=sh(script:"echo $GIT_BRANCH|sed -e 's|origin/||g'",returnStdout:true
 }
 
   stage('Build Docker Image'){
+	  steps
+  {
         sh 'docker build -t mmreddy424/spring-boot-mongo .'
+  }
     }
 
     stage('Push Docker Image'){
